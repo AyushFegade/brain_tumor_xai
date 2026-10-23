@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+*.pth
+*.pt
+*.h5
+outputs/

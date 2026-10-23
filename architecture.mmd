@@ -1,0 +1,35 @@
+flowchart TD
+    A[Brain MRI Image] --> B[Preprocessing]
+    B --> B1[Resize to 224x224]
+    B --> B2[Normalize using ImageNet statistics]
+    B --> B3[Training-only augmentation]
+
+    B --> C{Model Benchmark}
+    C --> C1[Custom CNN]
+    C --> C2[ResNet50]
+    C --> C3[EfficientNet-B0]
+    C --> C4[DenseNet121]
+
+    C1 --> D[Validation: Macro F1]
+    C2 --> D
+    C3 --> D
+    C4 --> D
+
+    D --> E[Best Model]
+    E --> F[Raw Logits]
+    F --> G[Temperature Scaling]
+    G --> H[Calibrated Class Probabilities]
+
+    H --> I[Predicted Class]
+    H --> J[Validation-derived Confidence Threshold]
+    J --> K{Confidence >= threshold?}
+    K -->|Yes| L[Accepted Prediction]
+    K -->|No| M[Uncertain - Expert Review]
+
+    E --> N[Grad-CAM]
+    N --> O[Visual Explanation / Tumor-relevant Region]
+
+    I --> P[Final Output]
+    L --> P
+    M --> P
+    O --> P
